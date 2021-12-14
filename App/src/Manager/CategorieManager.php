@@ -74,8 +74,7 @@ class CategorieManager
         return $this->pdostat->execute();
     
     }
-    
-    
+
     private function create(Categorie $categ)
     {
     

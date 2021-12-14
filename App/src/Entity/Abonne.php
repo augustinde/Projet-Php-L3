@@ -6,30 +6,46 @@ class Abonne
 {
 
     private $nom;
-    private $id;
-    private $pnom;
+    private $id_abonne;
+    private $prenom;
     private $tel;
     private $email;
     private $adresse;
     private $statut;
     private $nb_retard;
     private $indice_confiance;
-    private $id_categ;
+    private $id_categorie;
 
     /**
      * @return mixed
      */
-    public function getPnom()
+    public function getIdAbonne()
     {
-        return $this->pnom;
+        return $this->id_abonne;
     }
 
     /**
-     * @param mixed $pnom
+     * @param mixed $id_abonne
      */
-    public function setPnom($pnom)
+    public function setIdAbonne($id_abonne)
     {
-        $this->pnom = $pnom;
+        $this->id_abonne = $id_abonne;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    /**
+     * @param mixed $prenom
+     */
+    public function setPrenom($prenom)
+    {
+        $this->prenom = $prenom;
     }
 
     /**
@@ -147,25 +163,9 @@ class Abonne
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getIdCateg()
     {
-        return $this->id_categ;
+        return $this->id_categorie;
     }
 
     /**
@@ -173,7 +173,7 @@ class Abonne
      */
     public function setIdCateg($id_categ)
     {
-        $this->id_categ = $id_categ;
+        $this->id_categorie = $id_categ;
     }
 
 

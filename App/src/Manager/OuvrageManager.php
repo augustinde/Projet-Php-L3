@@ -22,7 +22,7 @@ class OuvrageManager
     
     public function read($id)
     {
-        $this->pdostat = $this->pdo->prepare('SELECT * FROM ouvrage WHERE id = :id');
+        $this->pdostat = $this->pdo->prepare('SELECT * FROM ouvrage WHERE id_ouvrage = :id');
         
         $this->pdostat->bindValue(':id', $id, PDO::PARAM_INT);
         $executeIsOk = $this->pdostat->execute();
@@ -46,12 +46,12 @@ class OuvrageManager
         }  
     
     }
-    
-    
+
+
     public function readall()
     {
     
-        $this->pdostat = $this->pdo->query('SELECT * FROM ouvrage ORDER BY id');
+        $this->pdostat = $this->pdo->query('SELECT * FROM ouvrage ORDER BY id_ouvrage');
     
         $ouvrages = [];
     
@@ -69,7 +69,7 @@ class OuvrageManager
     public function delete(Ouvrage $ouvrage)
     {
         $this->pdostat = $this->pdo->prepare('DELETE FROM ouvrage WHERE id = :id LIMIT 1');
-        $this->pdostat->bindValue(':id', $ouvrage->getId(), PDO::PARAM_INT);
+        $this->pdostat->bindValue(':id', $ouvrage->getIdOuvrage(), PDO::PARAM_INT);
     
         return $this->pdostat->execute();
     
@@ -109,10 +109,10 @@ class OuvrageManager
     private function update(Ouvrage $ouvrage)
     {
     
-        $this->pdostat = $this->pdo->prepare('UPDATE ouvrage set titre=:titre, annee_parution=:annee_parution, etat=:etat, id_editeur=:id_editeur, id_genre=:id_genre WHERE id=:id LIMIT 1');
+        $this->pdostat = $this->pdo->prepare('UPDATE ouvrage set titre=:titre, annee_parution=:annee_parution, etat=:etat, id_editeur=:id_editeur, id_genre=:id_genre WHERE id_ouvrage=:id LIMIT 1');
         
         //Ajout des paramètres (Raccourcis : addbv)
-        $this->pdostat->bindValue(':id', $ouvrage->getId(), PDO::PARAM_INT);
+        $this->pdostat->bindValue(':id', $ouvrage->getIdOuvrage(), PDO::PARAM_INT);
         $this->pdostat->bindValue(':titre', $ouvrage->getTitre(), PDO::PARAM_STR);
         $this->pdostat->bindValue(':annee_parution', $ouvrage->getAnneeParution());
         $this->pdostat->bindValue(':etat', $ouvrage->getEtat(), PDO::PARAM_INT);
@@ -127,7 +127,7 @@ class OuvrageManager
     public function save(Ouvrage &$ouvrage)
     {
     
-        if(is_null($ouvrage->getId())){
+        if(is_null($ouvrage->getIdOuvrage())){
             return $this->create($ouvrage);
         }else{
             return $this->update($ouvrage);

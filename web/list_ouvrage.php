@@ -28,6 +28,14 @@ $editeurManager = new EditeurManager();
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ouvrages</title>
+    <style>
+        table, tr,td{
+            border:1px solid black !important;
+        }
+        table{
+            width:100%;
+        }
+    </style>
     <?php
         require_once 'include/head.php';
     ?>
@@ -37,7 +45,16 @@ $editeurManager = new EditeurManager();
     require_once 'include/navbar.php';
 ?>
     <br>
-    <div class="row">
+    <table border="1">
+
+        <tr>
+            <td>Titre</td>
+            <td>Date de parution</td>
+            <td>Etat</td>
+            <td>Genre</td>
+            <td>Editeur</td>
+            <td>Action</td>
+        </tr>
 
         <?php
 
@@ -46,28 +63,25 @@ $editeurManager = new EditeurManager();
                 $genre = $genreManager->read((int)$ouvrage->getIdGenre());
                 $editeur = $editeurManager->read((int)$ouvrage->getIdEditeur());
 
-                $etat = $ouvrage->getEtat() == 0 ? "Mauvais" : "Bon";
+                $etat = $ouvrage->getEtat() == 0 ? "Pas disponible" : "Disponible";
                 ?>
+                    
+                <tr>
+                    <td><?= $ouvrage->getTitre() ?></td>
+                    <td><?= $ouvrage->getAnneeParution() ?></td>
+                    <td><?= $etat ?></td>
+                    <td><?= $genre->getNom() ?></td>
+                    <td><?= $editeur->getNom() ?></td>
+                    <td><a href="delete_ouvrage.php?id=<?= $ouvrage->getIdOuvrage() ?>" class="btn btn-primary">Supprimer</a></td>
+                </tr>
 
-                <div class="col-sm-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= $ouvrage->getTitre() ?></h5>
-                            <p class="card-text">Paru en <?= $ouvrage->getAnneeParution() ?></p>
-                            <p class="card-text">Etat : <?= $etat ?></p>
-                            <p class="card-text">Genre : <?= $genre->getNom() ?></p>
-                            <p class="card-text">Editeur : <?= $editeur->getNom() ?></p>
-                            <a href="delete_ouvrage.php?id=<?= $ouvrage->getId() ?>" class="btn btn-primary">Supprimer</a>
-                        </div>
-                    </div>
-                </div>
 
                 <?php
             }
 
         ?>
 
-    </div>
+    </table>
 
 </body>
 </html>

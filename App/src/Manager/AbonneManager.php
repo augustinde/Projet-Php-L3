@@ -21,7 +21,7 @@ class AbonneManager
     
     public function read($id)
     {
-        $this->pdostat = $this->pdo->prepare('SELECT * FROM abonne WHERE id = :id');
+        $this->pdostat = $this->pdo->prepare('SELECT * FROM abonne WHERE id_abonne = :id');
         
         $this->pdostat->bindValue(':id', $id, PDO::PARAM_INT);
         $executeIsOk = $this->pdostat->execute();
@@ -50,7 +50,7 @@ class AbonneManager
     public function readall()
     {
     
-        $this->pdostat = $this->pdo->query('SELECT * FROM abonne ORDER BY id');
+        $this->pdostat = $this->pdo->query('SELECT * FROM abonne ORDER BY id_abonne');
     
         $abonnes = [];
     
@@ -64,21 +64,38 @@ class AbonneManager
     
     
     }
-    
+
+    public function readallconfiance()
+    {
+
+        $this->pdostat = $this->pdo->query('SELECT * FROM abonne ORDER BY indice_confiance');
+
+        $abonnes = [];
+
+        while($abonne = $this->pdostat->fetchObject('App\src\Entity\Abonne')){
+
+            $abonnes[] = $abonne;
+
+        }
+
+        return $abonnes;
+
+
+    }
+
     public function delete(Abonne $abonne)
     {
-        $this->pdostat = $this->pdo->prepare('DELETE FROM abonne WHERE id = :id LIMIT 1');
+        $this->pdostat = $this->pdo->prepare('DELETE FROM abonne WHERE id_abonne = :id LIMIT 1');
         $this->pdostat->bindValue(':id', $abonne->getId(), PDO::PARAM_INT);
     
         return $this->pdostat->execute();
     
     }
-    
-    
+
     private function create(Abonne $abonne)
     {
     
-        $this->pdostat = $this->pdo->prepare('INSERT INTO abonne (id, nom, prenom, tel, email, adresse, id_categorie) VALUES (DEFAULT, :nom, :pnom, :tel, :email, :adresse, :id_categ)');
+        $this->pdostat = $this->pdo->prepare('INSERT INTO abonne (id_abonne, nom, prenom, tel, email, adresse, id_categorie) VALUES (DEFAULT, :nom, :pnom, :tel, :email, :adresse, :id_categ)');
 
         //Ajout des paramètres (Raccourcis : addbv)
 
@@ -109,9 +126,9 @@ class AbonneManager
     
     private function update(Abonne $abonne)
     {
-    
-        $this->pdostat = $this->pdo->prepare('UPDATE abonne set nom=:nom, prenom=:pnom, tel=:tel, email=:email, adresse=:adresse, statut=:statut, nb_retard=:nb_retard, indice_confiance=:indice_confiance, id_categorie=:id_categ WHERE id=:id LIMIT 1');
-        
+
+        $this->pdostat = $this->pdo->prepare('UPDATE abonne set nom=:nom, prenom=:pnom, tel=:tel, email=:email, adresse=:adresse, statut=:statut, nb_retard=:nb_retard, indice_confiance=:indice_confiance, id_categorie=:id_categ WHERE id_abonne=:id LIMIT 1');
+
         //Ajout des paramètres (Raccourcis : addbv)
         $this->pdostat->bindValue(':id', $abonne->getId(), PDO::PARAM_INT);
         $this->pdostat->bindValue(':nom', $abonne->getNom());

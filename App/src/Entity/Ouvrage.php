@@ -7,7 +7,7 @@ namespace App\src\Entity;
 class Ouvrage
 {
 
-    private $id;
+    private $id_ouvrage;
     private $titre;
     private $annee_parution;
     private $etat;
@@ -44,22 +44,6 @@ class Ouvrage
     public function setIdGenre($id_genre)
     {
         $this->id_genre = $id_genre;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -110,6 +94,21 @@ class Ouvrage
         $this->etat = $etat;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getIdOuvrage()
+    {
+        return $this->id_ouvrage;
+    }
+
+    /**
+     * @param mixed $id_ouvrage
+     */
+    public function setIdOuvrage($id_ouvrage)
+    {
+        $this->id_ouvrage = $id_ouvrage;
+    }
 
 
 }
